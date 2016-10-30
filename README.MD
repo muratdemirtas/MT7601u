@@ -198,7 +198,7 @@ sudo rpi-source
 ****************************************************
 
 
-
+thanks eywalink for main repository ***https://github.com/eywalink/mt7601u
 
 
 
