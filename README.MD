@@ -108,13 +108,21 @@ authoritative;
 Then scroll down to the bottom and add the following lines 
 
 subnet 192.168.42.0 netmask 255.255.255.0 {
+
 range 192.168.42.10 192.168.42.50; 
+
 option broadcast-address 192.168.42.255; 
+
 option routers 192.168.42.1;
+
 default-lease-time 600;
+
 max-lease-time 7200; 
+
 option domain-name "local"; 
+
 option domain-name-servers 8.8.8.8, 8.8.4.4;
+
 }
 
 Save the file by typing in Control-X then Y then return
