@@ -77,6 +77,10 @@ After reboot your system, Access Point is established and wait for dhcp install.
 
 ![alt tag](http://i.hizliresim.com/Y40gYk.jpg)
 
+![alt tag](http://i.hizliresim.com/6mONjW.jpg)
+
+
+
 At this moment, you can connect your Access Point but you can’t obtain IP adress because DHCP server isn’t installed. Install with these commands
 
 sudo apt-get install hostapd isc-dhcp-server
