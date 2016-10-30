@@ -1,69 +1,82 @@
-ABSTRACT FOR ACCESS POINTÖ
-      Hello guys. Iím Murat. First I want to say, my English is not good. This example will teach you for using unsupported Mediatek MT7601u based wireless chipsets in Access Point mode. So you can use this wireless antenna in your embedded or desktop based Linux robotic projects or sharing your internet connection(as like hotspot). No Hardware and Programming skills required. We will not use hostapd driver. Just follow above what I write.
+ABSTRACT FOR ACCESS POINT‚Ä¶
 
+      Hello guys. I‚Äôm Murat. First I want to say, my english is not good. This example will teach you for using unsupported Mediatek MT7601u based wireless chipsets as Access Point mode in Linux systems. So you can use this wireless antenna in your embedded or desktop based Linux robotic projects or sharing your internet connection(as like hotspot). No hardware and programming skills required. We will not use hostapd driver. Just follow what I write.
+      
 Plug your Wi-Fi antenna to your PC or Raspberry Pi and write this command to check if you have Clone MT7601.
+
 pi@raspberrypi:~ $ lsusb
 
-
-
----------------------------------RESIM------------------------------------
+![alt tag](http://i.hizliresim.com/aXWzNB.jpg)
 
 
 Look this image if Ralink ID is equal with your Wi-Fi dongle then everything is fine. Your module will work. Follow instractions for your linux based operating systems.
 
-ON UBUNTU 32-64 BIT SYSTEMSÖ
+ON UBUNTU 32-64 BIT SYSTEMS‚Ä¶
+
+
+
 On Ubuntu 16.04 32-64 bit LTS systems, you can compile this driver easily. But you must be first update your system with these commands.
+
 sudo apt-get update
+
 sudo apt-get upgrade -y
 
-After if you dont have git package then you cant install  driver from git. Install with this command.
-sudo apt-get install git -y
 
+After if you dont have git package then you cant install  driver from git. Install with this command.
+
+sudo apt-get install git -y
 
 Get this driver with git clone method from this repo. Type to terminal
 
 git clone https://github.com/muratdemirtas/MT7601u.git
 
-
 Driver will download after this command to your home directory. Open downloaded driver folder with
 
 cd /mt7601u
 
-if you want to change your Access Point configuration use this command for opening.
 
-If you have nano package then use
+if you want to change your Access Point configuration use this command for opening. If you have nano package then use
 
 sudo nano  /home/pi/mt7601u/etc/Wireless/RT2870AP/RT2870AP.dat
 
 If you dont have nano. Install from repository with command,
 
 sudo apt-get install nano -y
-write your settings and use save for configuration ìctrl-wî and press ìyî
 
+Write your settings and save for configuration, press ‚Äúctrl-w‚Äù + press ‚Äúy‚Äù and press enter. Compile your driver with this commands.
 
-And compile your driver with this commands.
+sudo cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
+sudo make clean && make all && make install
+sudo rm -rvf src/os/linux/Module.symvers
 
-cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
-make clean && make all && make install
-rm -rvf src/os/linux/Module.symvers
+So you if not receive any error messages and success , driver is compiled and ready for Access Point mode. Make install command will deploy your Access Point drivers (rtnet7601Uap, mt7601Uap) to kernel automatically. But old MT7601 Chipset kernel module must be remove from Linux kernel system. Only and easy way fort his, add old mt7601 kernel module to Linux blacklist. So you can this easy with these commands.
 
-So you if not receive any error messages and success , driver is compiled and ready for Access Point mode. Make install command will deploy your Access Point drivers (rtnet7601Uap, mt7601Uap) to kernel automatically. But old MT7601 Chipset kernel module must be remove from Linux kernel system. Only and easy way fort his, add old mt7601 kernel mod¸le to Linux blacklist. So you can this easy with these commands.
+Just open your¬†/etc/modprobe.d/blacklist¬†file
 
-Just open your†/etc/modprobe.d/blacklist†file and add drivername using following syntax:
+sudo nano /etc/modprobe.d/blacklist
+
+and add drivername using following syntax:
 
 blacklist mt7601u 
 
-EDIT: In later versions since 12.10 (12.04?) the file is†/etc/modprobe.d/blacklist.conf
+press ‚Äúctrl-w‚Äù + press ‚Äúy‚Äù and press enter for save. 
 
-Reboot your system and use lsmod command to show the status of modules in the Linux Kernel. If you dont see any mod¸le as ìmt7601uî then success. 
+EDIT: In later versions since 12.10 (12.04?) the file is¬†/etc/modprobe.d/blacklist.conf
+
+Reboot your system and use lsmod command to show the status of modules in the Linux Kernel. If you dont see any mod√ºle as ‚Äúmt7601u‚Äù then success. 
 
 
-------------------------------------------RESIM RA0----------------------------------------------------------
+![alt tag](http://i.hizliresim.com/LQrbz1.jpg)
+
+![alt tag](http://i.hizliresim.com/ZY49ya.jpg)
+
 Source: http://askubuntu.com/questions/110341/how-to-blacklist-kernel-modules
+
+
 After reboot your system, Access Point is established and wait for dhcp install. 
 
 -----------------------------------------------RESIM-------------------------------------------------------------
-In now you can connect your Access Point but you canít obtain IP adress because DHCP server isnít installed. Install with these commands
+In now you can connect your Access Point but you can‚Äôt obtain IP adress because DHCP server isn‚Äôt installed. Install with these commands
 sudo apt-get install hostapd isc-dhcp-server
 (You may need to sudo apt-get update if the Pi can't seem to get to the apt-get repositories)
 
@@ -90,7 +103,7 @@ So your Access Point is ready
 
 
 
-ON RASPBERRY PI EMBEDDED LINUX 32-64 BIT SYSTEMSÖ
+ON RASPBERRY PI EMBEDDED LINUX 32-64 BIT SYSTEMS‚Ä¶
 
 For compiling for this module, use these commands for compiling and take a coffee.
 
