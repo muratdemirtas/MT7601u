@@ -35,7 +35,11 @@ Driver will download after this command to your home directory. Open downloaded 
 cd /mt7601u
 
 
-if you want to change your Access Point configuration use this command for opening. If you have nano package then use
+if you want to change your Access Point configuration use this command for opening. 
+
+(default ssid : Rpi_Hotspot_Free, password:1234567890) 
+
+If you have nano package then use
 
 sudo nano  /home/pi/mt7601u/etc/Wireless/RT2870AP/RT2870AP.dat
 
