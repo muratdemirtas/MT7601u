@@ -139,34 +139,55 @@ So your Access Point is ready and internet sharing will work
 
 ![alt tag](http://i.hizliresim.com/RQMD6a.jpg)
 
+
+
 ON RASPBERRY PI EMBEDDED LINUX 32-64 BIT SYSTEMS…
 
 For compiling for this module, use these commands for compiling and take a coffee.
 
 git clone https://github.com/muratdemirtas/MT7601u.git
+
 cd mt7601u/
+
 sudo cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
+
 sudo make clean && make all && make install
+
 sudo rm -rvf src/os/linux/Module.symvers
+
 sudo ifconfig wlan0 down
+
 sudo rmmod mt7601u
+
 sudo ifconfig ra0 up
+
 sudo ifconfig ra0 192.168.42.1
 
 sudo iptables -F
 
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward "
+
 sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+
 sudo iptables -A FORWARD -i ens33 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
 sudo iptables -A FORWARD -i ra0 -o ens33 -j ACCEPT
+
 sudo iptables -t nat -S
+
 sudo service isc-dhcp-server restart
+
 
 **********************ATTENTION**********************
 if you receive  "Makefile:387: recipe for target 'LINUX' failed".
 You need to get Raspberry Pi linux headers using rpi-source.
 
-sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source && sudo chmod +x /usr/bin/rpi-source && /usr/bin/rpi-source -q --tag-update
+sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source  
+
+sudo chmod +x /usr/bin/rpi-source 
+
+/usr/bin/rpi-source -q --tag-update
+
 sudo rpi-source
 ****************************************************
 
