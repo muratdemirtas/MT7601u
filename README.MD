@@ -130,10 +130,15 @@ sudo ifconfig ra0 192.168.42.1
 sudo iptables -F
 
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward "
-sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
-sudo iptables -A FORWARD -i ens33 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A FORWARD -i ra0 -o ens33 -j ACCEPT
+
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+sudo iptables -A FORWARD -i eth0 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+sudo iptables -A FORWARD -i ra0 -o eth0 -j ACCEPT
+
 sudo iptables -t nat -S
+
 
 So your Access Point is ready and internet sharing will work
 
@@ -179,6 +184,7 @@ sudo service isc-dhcp-server restart
 
 
 **********************ATTENTION**********************
+
 if you receive  "Makefile:387: recipe for target 'LINUX' failed".
 You need to get Raspberry Pi linux headers using rpi-source.
 
