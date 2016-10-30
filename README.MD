@@ -70,57 +70,108 @@ Reboot your system and use lsmod command to show the status of modules in the Li
 
 ![alt tag](http://i.hizliresim.com/ZY49ya.jpg)
 
-Source: http://askubuntu.com/questions/110341/how-to-blacklist-kernel-modules
 
+Source: http://askubuntu.com/questions/110341/how-to-blacklist-kernel-modules
 
 After reboot your system, Access Point is established and wait for dhcp install. 
 
------------------------------------------------RESIM-------------------------------------------------------------
-In now you can connect your Access Point but you can’t obtain IP adress because DHCP server isn’t installed. Install with these commands
+![alt tag](http://i.hizliresim.com/Y40gYk.jpg)
+
+At this moment, you can connect your Access Point but you can’t obtain IP adress because DHCP server isn’t installed. Install with these commands
+
 sudo apt-get install hostapd isc-dhcp-server
+
 (You may need to sudo apt-get update if the Pi can't seem to get to the apt-get repositories)
 
-Next we will edit /etc/dhcp/dhcpd.conf, a file that sets up our DHCP server - this allows wifi connections to automatically get IP addresses, DNS, etc. Run this command to edit the file sudo nano /etc/dhcp/dhcpd.conf Find the lines that say option domain-name "example.org"; option domain-name-servers ns1.example.org, ns2.example.org; and change them to add a # in the beginning so they say #option domain-name "example.org"; #option domain-name-servers ns1.example.org, ns2.example.org; Find the lines that say # If this DHCP server is the official DHCP server for the local # network, the authoritative directive should be uncommented
 
-and remove the # so it says # If this DHCP server is the official DHCP server for the local # network, the authoritative directive should be uncommented. authoritative;
-Then scroll down to the bottom and add the following lines subnet 192.168.42.0 netmask 255.255.255.0 { range 192.168.42.10 192.168.42.50; option broadcast-address 192.168.42.255; option routers 192.168.42.1; default-lease-time 600; max-lease-time 7200; option domain-name "local"; option domain-name-servers 8.8.8.8, 8.8.4.4; }
+Next, we will edit /etc/dhcp/dhcpd.conf, a file that sets up our DHCP server - this allows wifi connections to automatically get IP addresses, DNS, etc. Run this command to edit the file 
 
-Save the file by typing inControl-X then Y then return Run sudo nano /etc/default/isc-dhcp-server and scroll down to INTERFACES="" and update it to say INTERFACES="wlan0" Or whatever the name of your wifi adapter is!
+sudo nano /etc/dhcp/dhcpd.conf 
+Find the lines that say 
+
+option domain-name "example.org"; 
+option domain-name-servers ns1.example.org, ns2.example.org;
+
+and change them to add a # in the beginning so they say 
+#option domain-name "example.org";
+#option domain-name-servers ns1.example.org, ns2.example.org; 
+
+Find the lines that say # If this DHCP server is the official DHCP server for the local # network, the authoritative directive should be uncommented
+
+authoritative;
+
+
+Then scroll down to the bottom and add the following lines 
+
+subnet 192.168.42.0 netmask 255.255.255.0 {
+range 192.168.42.10 192.168.42.50; 
+option broadcast-address 192.168.42.255; 
+option routers 192.168.42.1;
+default-lease-time 600;
+max-lease-time 7200; 
+option domain-name "local"; 
+option domain-name-servers 8.8.8.8, 8.8.4.4;
+}
+
+Save the file by typing in Control-X then Y then return
+
+Run 
+sudo nano /etc/default/isc-dhcp-server 
+
+and scroll down to INTERFACES="" and update it to say INTERFACES="ra0" 
+
+Or whatever the name of your wifi adapter is!
 Source: https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf
 
 set static IP for your wifi card type and route packages for internet share type these commands to terminal
+
 sudo ifconfig ra0 192.168.42.1
+
 sudo iptables -F
-programmer@ubuntu:~$ sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward "
-programmer@ubuntu:~$ sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
-programmer@ubuntu:~$ sudo iptables -A FORWARD -i ens33 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-programmer@ubuntu:~$ sudo iptables -A FORWARD -i ra0 -o ens33 -j ACCEPT
-programmer@ubuntu:~$ sudo iptables -t nat -S
 
-So your Access Point is ready
-------------------------------------------RESIM
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward "
+sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+sudo iptables -A FORWARD -i ens33 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i ra0 -o ens33 -j ACCEPT
+sudo iptables -t nat -S
 
+So your Access Point is ready and internet sharing will work
 
-
+![alt tag](http://i.hizliresim.com/RQMD6a.jpg)
 
 ON RASPBERRY PI EMBEDDED LINUX 32-64 BIT SYSTEMS…
 
 For compiling for this module, use these commands for compiling and take a coffee.
 
-1. pi@raspberrypi:~/Downloads/mi $ git clone https://github.com/eywalink/mt7601u.git
-2. ....
-3. pi@raspberrypi:~/Downloads/mi $ cd mt7601u/
-4. pi@raspberrypi:~/Downloads/mi/mt7601u $ sudo ./miwifi_build.sh
+git clone https://github.com/muratdemirtas/MT7601u.git
+cd mt7601u/
+sudo cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
+sudo make clean && make all && make install
+sudo rm -rvf src/os/linux/Module.symvers
+sudo ifconfig wlan0 down
+sudo rmmod mt7601u
+sudo ifconfig ra0 up
+sudo ifconfig ra0 192.168.42.1
 
-1. Makefile:387: recipe for target 'LINUX' failed
+sudo iptables -F
 
-1. sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source && sudo chmod +x /usr/bin/rpi-source && /usr/bin/rpi-source -q --tag-update
-2. sudo rpi-source
-3. i@raspberrypi:~ $sudo ifconfig wlan0 down
-4. pi@raspberrypi:~ $sudo rmmod mt7601u
-5. pi@raspberrypi:~ $sudo ifconfig ra0 up
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward "
+sudo iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE
+sudo iptables -A FORWARD -i ens33 -o ra0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i ra0 -o ens33 -j ACCEPT
+sudo iptables -t nat -S
+sudo service isc-dhcp-server restart
 
----------------------------------------RESIM------------------------------------
+**********************ATTENTION**********************
+if you receive  "Makefile:387: recipe for target 'LINUX' failed".
+You need to get Raspberry Pi linux headers using rpi-source.
+
+sudo wget https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source && sudo chmod +x /usr/bin/rpi-source && /usr/bin/rpi-source -q --tag-update
+sudo rpi-source
+****************************************************
+
+
+
 
 
 
