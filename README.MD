@@ -71,6 +71,7 @@ Reboot your system and use lsmod command to show the status of modules in the Li
 ![alt tag](http://i.hizliresim.com/ZY49ya.jpg)
 
 
+
 Source: http://askubuntu.com/questions/110341/how-to-blacklist-kernel-modules
 
 After reboot your system, Access Point is established and wait for dhcp install. 
@@ -134,6 +135,11 @@ and scroll down to INTERFACES="" and update it to say INTERFACES="ra0"
 
 Or whatever the name of your wifi adapter is!
 Source: https://cdn-learn.adafruit.com/downloads/pdf/setting-up-a-raspberry-pi-as-a-wifi-access-point.pdf
+
+![alt tag](http://i.hizliresim.com/nEnb15.jpg)
+
+
+
 
 set static IP for your wifi card type and route packages for internet share type these commands to terminal
 
