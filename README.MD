@@ -49,6 +49,8 @@ sudo apt-get install nano -y
 
 Write your settings and save for configuration, press “ctrl-w” + press “y” and press enter. Compile your driver with this commands.
 
+cd mt7601u/
+
 sudo cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
 sudo make clean && make all && make install
 sudo rm -rvf src/os/linux/Module.symvers
