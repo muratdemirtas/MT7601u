@@ -43,6 +43,7 @@ USB_DEVICE_ID rtusb_dev_id[] = {
 	{USB_DEVICE(0x148f,0x7601)}, /* MT 6370 */
 	{USB_DEVICE(0x148f,0x760b)}, /* 360 wifi 2 */
 	{USB_DEVICE(0x2717,0x4106)}, /* XiaoMi wifi */
+	{USB_DEVICE(0x2001,0x3d04)}, /* D-Link DWA-127 */	
 #endif /* MT7601U */
 	{ }/* Terminating entry */
 };
