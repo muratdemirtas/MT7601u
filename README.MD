@@ -1,6 +1,8 @@
 ABSTRACT FOR ACCESS POINT…
 
-Hello guys. I’m Murat. First I want to say, my english is not good. This example will teach you for using unsupported Mediatek MT7601u based wireless chipsets as Access Point mode in Linux systems. So you can use this wireless antenna in your embedded or desktop based Linux robotic projects or sharing your internet connection(as like hotspot). No hardware and programming skills required. We will not use hostapd driver. Just follow what I write.
+Hello guys. I’m Murat. First I want to say, my english is not good. 
+
+This example will teach you for using unsupported Mediatek MT7601u based wireless chipsets as Access Point mode in Linux systems. So you can use this wireless antenna in your embedded or desktop based Linux robotic projects or sharing your internet connection(as like hotspot). No hardware and programming skills required. We will not use hostapd driver. Just follow what I write.
 
 Plug your Wi-Fi antenna to your PC or Raspberry Pi and write this command to check if you have Clone MT7601.
 
@@ -12,7 +14,6 @@ pi@raspberrypi:~ $ lsusb
 Look this image if Ralink ID is equal with your Wi-Fi dongle then everything is fine. Your module will work. Follow instractions for your linux based operating systems.
 
 ON UBUNTU 32-64 BIT SYSTEMS…
-
 
 
 On Ubuntu 16.04 32-64 bit LTS systems, you can compile this driver easily. But you must be first update your system with these commands.
@@ -52,7 +53,9 @@ Write your settings and save for configuration, press “ctrl-w” + press “y�
 cd mt7601u/
 
 sudo cp -v /lib/modules/$(uname -r)/build/Module.symvers src/os/linux
-sudo make clean && make all && make install
+
+sudo make clean && make all && make install 
+
 sudo rm -rvf src/os/linux/Module.symvers
 
 So you if not receive any error messages and success , driver is compiled and ready for Access Point mode. Make install command will deploy your Access Point drivers (rtnet7601Uap, mt7601Uap) to kernel automatically. But old MT7601 Chipset kernel module must be remove from Linux kernel system. Only and easy way fort his, add old mt7601 kernel module to Linux blacklist. So you can this easy with these commands.
