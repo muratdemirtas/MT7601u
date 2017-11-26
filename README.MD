@@ -89,30 +89,31 @@ After reboot your system, Access Point is established and wait for dhcp install.
 ![alt tag](http://i.hizliresim.com/6mONjW.jpg)
 
 
-
-At this moment, you can connect your Access Point but you can’t obtain IP adress because DHCP server isn’t installed. Install with these commands
-
+## DHCP SERVER INSTALLATION
+At this moment, you can connect your Access Point but you can’t obtain IP adress because DHCP server isn’t installed. Install with these commands..(You may need to sudo apt-get update if the Pi can't seem to get to the apt-get repositories)
+```
 sudo apt-get install hostapd isc-dhcp-server
-
-(You may need to sudo apt-get update if the Pi can't seem to get to the apt-get repositories)
-
+```
 
 Next, we will edit /etc/dhcp/dhcpd.conf, a file that sets up our DHCP server - this allows wifi connections to automatically get IP addresses, DNS, etc. Run this command to edit the file 
 
+```
 sudo nano /etc/dhcp/dhcpd.conf 
+```
 Find the lines that say 
-
+```
 option domain-name "example.org"; 
 option domain-name-servers ns1.example.org, ns2.example.org;
-
+```
 and change them to add a # in the beginning so they say 
+```
 #option domain-name "example.org";
 #option domain-name-servers ns1.example.org, ns2.example.org; 
-
+```
 Find the lines that say # If this DHCP server is the official DHCP server for the local # network, the authoritative directive should be uncommented
-
+```
 authoritative;
-
+```
 
 Then scroll down to the bottom and add the following lines 
 
