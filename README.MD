@@ -2,13 +2,13 @@
 Raspberry Pi MT7601u ACCESS POINT AND STATION MODE SUPPORT
 
 ## Getting Started
-Hello guys. I’m Murat. First I want to say, my english is not good. 
 
 This example will teach you for using unsupported Mediatek MT7601u based wireless chipsets as Access Point mode in Linux systems. So you can use this wireless antenna in your embedded or desktop based Linux robotic projects or sharing your internet connection(as like hotspot). No hardware and programming skills required. We will not use hostapd driver. Just follow what I write.
 
 Plug your Wi-Fi antenna to your PC or Raspberry Pi and write this command to check if you have Clone MT7601.
-
+```
 pi@raspberrypi:~ $ lsusb
+```
 
 ![alt tag](http://i.hizliresim.com/aXWzNB.jpg)
 
