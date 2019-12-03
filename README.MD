@@ -36,7 +36,7 @@ sudo git clone https://github.com/muratdemirtas/MT7601u.git
 ### COMPILING DRIVER ON UBUNTU 32-64 BIT SYSTEMS…
 Driver will download after this command to your home directory. Open downloaded driver folder with
 ```
-cd /mt7601u
+cd mt7601u
 ```
 ## ACCESS POINT CONFIGURATION…
 if you want to change your Access Point configuration, use this command for opening. 
